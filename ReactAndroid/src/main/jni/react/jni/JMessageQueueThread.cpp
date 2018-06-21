@@ -12,8 +12,6 @@
 #include <folly/Memory.h>
 #include <fb/fbjni.h>
 
-#include <jschelpers/JSCHelpers.h>
-
 #include "JNativeRunnable.h"
 
 namespace facebook {
@@ -33,11 +31,7 @@ struct JavaJSException : jni::JavaClass<JavaJSException, JThrowable> {
 
 std::function<void()> wrapRunnable(std::function<void()>&& runnable) {
   return [runnable=std::move(runnable)] {
-    try {
       runnable();
-    } catch (const JSException& ex) {
-      throwNewJavaException(JavaJSException::create(ex.what(), ex.getStack().c_str(), ex).get());
-    }
   };
 }
 

@@ -10,7 +10,6 @@
 #include <string>
 
 #include <cxxreact/ReactMarker.h>
-#include <jschelpers/JavaScriptCore.h>
 
 #ifndef RN_EXPORT
 #define RN_EXPORT __attribute__((visibility("default")))
