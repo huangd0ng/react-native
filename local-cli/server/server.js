@@ -22,13 +22,13 @@ import type {Args as RunServerArgs} from './runServer';
  */
 function server(argv: mixed, config: RNConfig, allArgs: Object) {
   const {root, ...args} = allArgs;
-  args.projectRoots = args.projectRoots.concat(root);
+  args.getWatchFolders = args.getWatchFolders.concat(root);
 
   const startedCallback = logReporter => {
     logReporter.update({
       type: 'initialize_started',
       port: args.port,
-      projectRoots: args.projectRoots,
+      projectRoots: args.getWatchFolders,
     });
 
     process.on('uncaughtException', error => {
@@ -80,7 +80,7 @@ module.exports = {
         'Sepcify any additional folders to be added to the watch list',
       parse: (val: string) => val.split(','),
       default: (config: ConfigT) => {
-        return config.getProjectRoots ? config.getProjectRoots() : undefined;
+        return config.getWatchFolders ? config.getWatchFolders() : undefined;
       },
     },
     {
