@@ -5,6 +5,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
 
 apply plugin: 'de.undercouch.download'
 
@@ -289,6 +291,23 @@ android {
     packagingOptions {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
+    }
+}
+
+
+publishing {
+    publications {
+        ReactAndroid(MavenPublication) {
+            groupId 'com.dayuwuxian.reactnative'
+            artifactId 'reactnative'
+            version '0.56'
+            artifact("$buildDir/outputs/aar/ReactAndroid-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
     }
 }
 

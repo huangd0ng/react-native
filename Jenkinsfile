@@ -80,7 +80,7 @@ def runStages() {
         ]
     ]
 
-    node('aws-ueo') {
+    node('dev') {
         def jsDockerBuild, androidDockerBuild
         def jsTag, androidTag, jsImageName, androidImageName, parallelInstrumentationTests
 
