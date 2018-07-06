@@ -84,6 +84,10 @@ def runStages() {
         def jsTag, androidTag, jsImageName, androidImageName, parallelInstrumentationTests
 
         try {
+            stage('Checkout') {
+                checkout scm
+            }
+
             stage('Setup') {
                 parallel(
                     'build base images': {
@@ -94,8 +98,6 @@ def runStages() {
             }
 
             stage('Build') {
-                checkout scm
-
                 def githubInfo = calculateGithubInfo()
                 buildInfo.scm.branch = githubInfo.branch
                 buildInfo.scm.sha = githubInfo.sha
