@@ -123,52 +123,60 @@ def runStages() {
 
             }
 
-            stage('Tests JS') {
-                try {
-                    parallel(
-                        'javascript flow': {
-                            runCmdOnDockerImage(jsImageName, 'yarn run flow -- check', '--rm')
-                        },
-                        'javascript tests': {
-                            runCmdOnDockerImage(jsImageName, 'yarn test --maxWorkers=4', '--rm')
-                        },
-                        'documentation tests': {
-                            runCmdOnDockerImage(jsImageName, 'cd website && yarn test', '--rm')
-                        },
-                        'documentation generation': {
-                            runCmdOnDockerImage(jsImageName, 'cd website && node ./server/generate.js', '--rm')
-                        }
-                    )
-                } catch(e) {
-                    currentBuild.result = "FAILED"
-                    echo "Test JS Stage Error: ${e}"
-                }
+            stage('Release') {
+              runCmdOnDockerImage(androidImageName, "./gradlew ReactAndroid:uploadArchives -DrepositoryUsername=${env.repositoryUsername} -DrepositoryPassword=${env.repositoryPassword} -drepositoryUrl=${env.repositoryUrl}", '--rm')
             }
 
-            stage('Tests Android') {
-                try {
-                    parallel(
-                        'android unit tests': {
-                            runCmdOnDockerImage(androidImageName, 'bash /app/ContainerShip/scripts/run-android-docker-unit-tests.sh', '--privileged --rm')
-                        },
-                        'android e2e tests': {
-                            runCmdOnDockerImage(androidImageName, 'bash /app/ContainerShip/scripts/run-ci-e2e-tests.sh --android --js', '--privileged --rm')
-                        }
-                    )
-                } catch(e) {
-                    currentBuild.result = "FAILED"
-                    echo "Tests Android Stage Error: ${e}"
-                }
-            }
+            // stage('Tests JS') {
+            //     try {
+            //         parallel(
+            //             'javascript flow': {
+            //                 runCmdOnDockerImage(jsImageName, 'yarn run flow -- check', '--rm')
+            //             },
+            //             'javascript tests': {
+            //                 runCmdOnDockerImage(jsImageName, 'yarn test --maxWorkers=4', '--rm')
+            //             },
+            //             'documentation tests': {
+            //                 runCmdOnDockerImage(jsImageName, 'cd website && yarn test', '--rm')
+            //             },
+            //             'documentation generation': {
+            //                 runCmdOnDockerImage(jsImageName, 'cd website && node ./server/generate.js', '--rm')
+            //             }
+            //         )
+            //     } catch(e) {
+            //         currentBuild.result = "FAILED"
+            //         echo "Test JS Stage Error: ${e}"
+            //     }
+            // }
 
-            stage('Tests Android Instrumentation') {
-                // run all tests in parallel
-                try {
-                    parallel(parallelInstrumentationTests)
-                } catch(e) {
-                    currentBuild.result = "FAILED"
-                    echo "Tests Android Instrumentation Stage Error: ${e}"
-                }
+            // stage('Tests Android') {
+            //     try {
+            //         parallel(
+            //             'android unit tests': {
+            //                 runCmdOnDockerImage(androidImageName, 'bash /app/ContainerShip/scripts/run-android-docker-unit-tests.sh', '--privileged --rm')
+            //             },
+            //             'android e2e tests': {
+            //                 runCmdOnDockerImage(androidImageName, 'bash /app/ContainerShip/scripts/run-ci-e2e-tests.sh --android --js', '--privileged --rm')
+            //             }
+            //         )
+            //     } catch(e) {
+            //         currentBuild.result = "FAILED"
+            //         echo "Tests Android Stage Error: ${e}"
+            //     }
+            // }
+
+            // stage('Tests Android Instrumentation') {
+            //     // run all tests in parallel
+            //     try {
+            //         parallel(parallelInstrumentationTests)
+            //     } catch(e) {
+            //         currentBuild.result = "FAILED"
+            //         echo "Tests Android Instrumentation Stage Error: ${e}"
+            //     }
+            // }
+
+            stage('Release') {
+
             }
 
             stage('Cleanup') {
