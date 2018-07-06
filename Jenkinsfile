@@ -2,8 +2,7 @@ import groovy.json.JsonSlurperClassic
 
 def runPipeline() {
     try {
-        ansiColor('xterm') {
-            runStages();
+        ansiColor('xterm') { runStages();
         }
     } catch(err) {
         echo "Error: ${err}"
@@ -88,7 +87,7 @@ def runStages() {
             stage('Setup') {
                 parallel(
                     'build base images': {
-                        androidBaseDockerBuild = docker.build("containership/android-base:latest-build", "-f ContainerShip/Dockerfile.android-base .")
+                        androidBaseDockerBuild = docker.build("rn-android-base:latest-build", "-f ContainerShip/Dockerfile.android-base .")
                         // pullDockerImage('containership/android-base:latest')
                     }
                 )
