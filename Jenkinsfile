@@ -81,14 +81,15 @@ def runStages() {
     ]
 
     node('dev') {
-        def jsDockerBuild, androidDockerBuild
+        def jsDockerBuild, androidDockerBuild, androidBaseDockerBuild
         def jsTag, androidTag, jsImageName, androidImageName, parallelInstrumentationTests
 
         try {
             stage('Setup') {
                 parallel(
-                    'pull images': {
-                        pullDockerImage('containership/android-base:latest')
+                    'build base images': {
+                        androidBaseDockerBuild = docker.build("containership/android-base:latest-build", "-f ContainerShip/Dockerfile.android-base .")
+                        // pullDockerImage('containership/android-base:latest')
                     }
                 )
             }
