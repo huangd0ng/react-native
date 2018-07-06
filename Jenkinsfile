@@ -124,7 +124,7 @@ def runStages() {
             }
 
             stage('Release') {
-              runCmdOnDockerImage(androidImageName, "./gradlew ReactAndroid:uploadArchives -DrepositoryUsername=${env.repositoryUsername} -DrepositoryPassword=${env.repositoryPassword} -DrepositoryUrl=${env.repositoryUrl}", '--rm')
+              runCmdOnDockerImage(androidImageName, "./gradlew ReactAndroid:uploadArchives -PrepositoryUsername=${env.repositoryUsername} -PrepositoryPassword=${env.repositoryPassword} -PrepositoryUrl=${env.repositoryUrl}", '--rm')
             }
 
             // stage('Tests JS') {
