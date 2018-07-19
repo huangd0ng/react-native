@@ -1,6 +1,6 @@
 APP_BUILD_SCRIPT := Android.mk
 
-APP_ABI := armeabi-v7a x86 armeabi
+APP_ABI := armeabi-v7a x86
 APP_PLATFORM := android-16
 
 APP_MK_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
