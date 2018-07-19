@@ -247,13 +247,8 @@ task packageReactNdkLibsForBuck(dependsOn: packageReactNdkLibs, type: Copy) {
 }
 
 android {
-<<<<<<< 668ca9db78b73caafc9ce9fdb39cf782ed78e3c8
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
-=======
-    compileSdkVersion 27
-    buildToolsVersion = "27.0.3"
->>>>>>> upgrade compile sdk and support lib to 27
 
     defaultConfig {
         minSdkVersion 15
@@ -319,7 +314,7 @@ publishing {
 dependencies {
     compile fileTree(dir: 'src/main/third-party/java/infer-annotations/', include: ['*.jar'])
     compile 'javax.inject:javax.inject:1'
-    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0'
     compile 'com.facebook.fresco:fresco:1.9.0'
     compile 'com.facebook.fresco:imagepipeline-okhttp3:1.9.0'
